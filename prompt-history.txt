@@ -11,3 +11,5 @@ Prompt 5
 Now connect the Describe Image button to Ollama. When I click it, send the base64 image to http://localhost:11434/api/generate using the llava model with the prompt "Describe this image in detail." Use stream: false. For now, just console.log the full response from Ollama so I can see its structure. Don't change the page display yet.
 Prompt 6
 The Ollama response works in the console. Now show the description text from the response field in the result box on the page instead of the placeholder message. Keep the console.log for now.
+Prompt 7
+The description now shows on the page, but the placeholder text "The description feature is coming soon" is still there, so please remove it. Also, while Ollama is working, show a "Describing image..." message and disable the Describe Image button so it can't be clicked twice. When it finishes, re-enable the button.
