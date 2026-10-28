@@ -6,8 +6,8 @@ const result = document.querySelector('#result');
 let currentPreviewUrl = null;
 let selectedImageBase64 = null;
 
-// Remove the static placeholder from the result box.
-result.replaceChildren();
+// Show a message before any image is chosen.
+result.textContent = 'No image selected. Please choose an image first.';
 
 imageInput.addEventListener('change', () => {
   const image = imageInput.files[0];
