@@ -37,6 +37,11 @@ imageInput.addEventListener('change', () => {
 });
 
 describeButton.addEventListener('click', async () => {
+  if (!selectedImageBase64) {
+    result.textContent = 'Please select an image first.';
+    return;
+  }
+
   describeButton.disabled = true;
   result.textContent = 'Describing image...';
 
