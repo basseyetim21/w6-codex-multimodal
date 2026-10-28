@@ -9,3 +9,5 @@ Prompt 4
 Now let's do one small step. Add code to main.js that uses FileReader to convert the selected image into base64, and remove the "data:image/...;base64," prefix. Don't connect to Ollama yet. Just console.log the first 50 characters of the base64 string so I can test it.
 Prompt 5
 Now connect the Describe Image button to Ollama. When I click it, send the base64 image to http://localhost:11434/api/generate using the llava model with the prompt "Describe this image in detail." Use stream: false. For now, just console.log the full response from Ollama so I can see its structure. Don't change the page display yet.
+Prompt 6
+The Ollama response works in the console. Now show the description text from the response field in the result box on the page instead of the placeholder message. Keep the console.log for now.

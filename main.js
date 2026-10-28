@@ -44,6 +44,9 @@ describeButton.addEventListener('click', () => {
     })
   })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data);
+      result.innerHTML = `<span class="result-icon" aria-hidden="true">✳</span><p>${data.response}</p>`;
+    })
     .catch(error => console.error('Error connecting to Ollama:', error));
 });
