@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #25302d;
+  background: #f5f6f0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #25302d;
+  --muted: #77817b;
+  --green: #426c58;
+  --green-dark: #345743;
+  --line: #e7eae2;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(ellipse at 50% 0%, #e9f0e3 0, #f5f6f0 53%);
+}
+
+.app { width: min(100% - 40px, 1040px); margin: 0 auto; padding: 76px 0 30px; }
+.page-header { text-align: center; margin: 0 auto 42px; }
+.eyebrow { margin: 0 0 12px; color: var(--green); font-size: .76rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 12px; font: 800 clamp(2.3rem, 6vw, 3.7rem)/1.1 'Manrope', sans-serif; letter-spacing: -.055em; }
+.intro { margin-bottom: 0; color: var(--muted); font-size: 1.05rem; }
+.workspace { display: grid; grid-template-columns: 1.08fr .92fr; gap: 20px; align-items: stretch; }
+.panel { padding: 26px; border: 1px solid #e8ebe4; border-radius: 18px; background: rgba(255,255,255,.88); box-shadow: 0 14px 45px rgba(50, 69, 55, .06); }
+.panel-heading { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
+.panel-heading h2 { margin: 0; font: 700 1.08rem 'Manrope', sans-serif; letter-spacing: -.02em; }
+.step { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 9px; background: #edf3eb; color: var(--green); font-size: .7rem; font-weight: 700; }
+.button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; padding: 0 17px; border: 0; border-radius: 10px; font: 600 .9rem 'DM Sans', sans-serif; cursor: pointer; transition: background .18s, transform .18s; }
+.button:hover:not(:disabled) { transform: translateY(-1px); }
+.button-secondary { margin-bottom: 16px; border: 1px solid #dce5da; background: #f7faf5; color: var(--green-dark); }
+.button-secondary:hover { background: #eff5ed; }
+.button-primary { width: 100%; margin-top: 16px; background: var(--green); color: white; }
+.button-primary:hover:not(:disabled) { background: var(--green-dark); }
+.button:disabled { background: #e9ece7; color: #9aa29b; cursor: not-allowed; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.visually-hidden:focus-visible + .button { outline: 3px solid #9ab9a0; outline-offset: 3px; }
+.preview { display: flex; min-height: 255px; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border: 1px dashed #d5ded3; border-radius: 13px; background: #f8faf6; color: var(--muted); text-align: center; }
+.preview p { margin: 12px 0 0; font-size: .86rem; }
+.preview img { display: block; width: 100%; max-height: 350px; object-fit: contain; }
+.placeholder-art { position: relative; width: 120px; height: 86px; overflow: hidden; border: 1px solid #dde7da; border-radius: 10px; background: #edf4e9; }
+.sun { position: absolute; top: 15px; right: 19px; width: 17px; height: 17px; border-radius: 50%; background: #dfc87e; }
+.hill { position: absolute; bottom: -24px; width: 105px; height: 70px; transform: rotate(35deg); border-radius: 14px; background: #a9c3a5; }
+.hill-back { left: -18px; bottom: -33px; background: #c5d8be; }
+.hill-front { right: -25px; }
+.result-box { display: flex; min-height: 255px; flex-direction: column; align-items: center; justify-content: center; padding: 25px; border-radius: 13px; background: #f7f8f4; color: var(--muted); text-align: center; }
+.result-box p { max-width: 290px; margin: 13px 0 0; font-size: .94rem; line-height: 1.65; }
+.result-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: #eaf1e7; color: var(--green); font-size: 1.4rem; }
+.note { margin: 14px 0 0; color: #8a938d; font-size: .78rem; text-align: center; }
+footer { padding-top: 30px; color: #89928a; font-size: .8rem; text-align: center; }
+footer span { color: #85a17f; }
+
+@media (max-width: 700px) {
+  .app { width: min(100% - 28px, 520px); padding-top: 52px; }
+  .page-header { margin-bottom: 30px; }
+  .workspace { grid-template-columns: 1fr; gap: 14px; }
+  .panel { padding: 21px; }
+  .preview, .result-box { min-height: 215px; }
+}

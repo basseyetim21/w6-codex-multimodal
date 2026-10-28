@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Describer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="page-header">
+      <p class="eyebrow">A little help seeing more</p>
+      <h1>Image Describer</h1>
+      <p class="intro">Choose an image and get ready to explore what’s in it.</p>
+    </header>
+
+    <section class="workspace" aria-label="Image description workspace">
+      <div class="panel image-panel">
+        <div class="panel-heading">
+          <span class="step">01</span>
+          <h2>Your image</h2>
+        </div>
+
+        <input class="visually-hidden" type="file" id="image-input" accept="image/*">
+        <label class="button button-secondary" for="image-input">Choose an image</label>
+
+        <div class="preview" id="image-preview" aria-live="polite">
+          <div class="placeholder-art" aria-hidden="true">
+            <span class="sun"></span><span class="hill hill-back"></span><span class="hill hill-front"></span>
+          </div>
+          <p>Your image preview will appear here</p>
+        </div>
+
+        <button class="button button-primary" id="describe-button" type="button" disabled>Describe Image</button>
+      </div>
+
+      <div class="panel result-panel" aria-labelledby="result-title">
+        <div class="panel-heading">
+          <span class="step">02</span>
+          <h2 id="result-title">What’s in the image?</h2>
+        </div>
+        <div class="result-box" id="result" role="status" aria-live="polite">
+          <span class="result-icon" aria-hidden="true">✳</span>
+          <p>Choose an image to get started. Your description will show up here.</p>
+        </div>
+        <p class="note">The description feature is coming soon.</p>
+      </div>
+    </section>
+    <footer>Made for curious eyes <span aria-hidden="true">✦</span></footer>
+  </main>
+</body>
+</html>

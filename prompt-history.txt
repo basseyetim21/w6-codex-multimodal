@@ -1,0 +1,3 @@
+TASK 1
+Prompt 1:
+I want to build a simple webpage that describes an image using AI. Let's start with just the layout, no AI yet. I need a title, a button to choose an image, a space to show the image preview, a "Describe Image" button, and a space to show messages and the description. I will use index.html, style.css and main.js. Please explain what each part does.
