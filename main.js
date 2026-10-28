@@ -6,6 +6,9 @@ const result = document.querySelector('#result');
 let currentPreviewUrl = null;
 let selectedImageBase64 = null;
 
+// Remove the static placeholder from the result box.
+result.replaceChildren();
+
 imageInput.addEventListener('change', () => {
   const image = imageInput.files[0];
 
@@ -29,24 +32,34 @@ imageInput.addEventListener('change', () => {
   imagePreview.append(preview);
   describeButton.disabled = false;
 
-  result.innerHTML = '<span class="result-icon" aria-hidden="true">✳</span><p>Your image is ready. AI descriptions will be added next.</p>';
+  result.innerHTML =
+    '<span class="result-icon" aria-hidden="true">✳</span><p>Your image is ready.</p>';
 });
 
-describeButton.addEventListener('click', () => {
-  fetch('http://localhost:11434/api/generate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'llava',
-      prompt: 'Describe this image in detail.',
-      images: [selectedImageBase64],
-      stream: false
-    })
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      result.innerHTML = `<span class="result-icon" aria-hidden="true">✳</span><p>${data.response}</p>`;
-    })
-    .catch(error => console.error('Error connecting to Ollama:', error));
+describeButton.addEventListener('click', async () => {
+  describeButton.disabled = true;
+  result.textContent = 'Describing image...';
+
+  try {
+    const response = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llava',
+        prompt: 'Describe this image in detail.',
+        images: [selectedImageBase64],
+        stream: false
+      })
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    result.textContent = data.response;
+  } catch (error) {
+    console.error('Error connecting to Ollama:', error);
+    result.textContent = 'Could not describe the image. Please try again.';
+  } finally {
+    describeButton.disabled = false;
+  }
 });
