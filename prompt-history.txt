@@ -17,3 +17,7 @@ Prompt 8
 If I click Describe Image before choosing an image, show the message "Please select an image first." in the result box. The button needs to stay clickable at the start so this message can appear.
 Prompt 9
 If the request to Ollama fails, for example because Ollama is not running, show a clearer error message in the result box: "Something went wrong. Please make sure Ollama is running and try again." Also handle the case where Ollama responds with an error status.
+
+TASK 2
+Prompt 1
+Now I want the app to work with two images. Add a second file input and a second preview area next to the first one, labelled "Image 1" and "Image 2". Show a preview for each. Don't change the Ollama part yet.

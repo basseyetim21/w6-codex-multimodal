@@ -1,41 +1,70 @@
 const imageInput = document.querySelector('#image-input');
 const imagePreview = document.querySelector('#image-preview');
+const imageInput2 = document.querySelector('#image-input-2');
+const imagePreview2 = document.querySelector('#image-preview-2');
 const describeButton = document.querySelector('#describe-button');
 const result = document.querySelector('#result');
 
-let currentPreviewUrl = null;
+let previewUrl1 = null;
+let previewUrl2 = null;
 let selectedImageBase64 = null;
+let selectedImageBase64_2 = null;
 
 // Show a message before any image is chosen.
 result.textContent = 'No image selected. Please choose an image first.';
 
-imageInput.addEventListener('change', () => {
-  const image = imageInput.files[0];
+// Show a preview of a file inside a preview box. Returns the new temporary URL.
+function showPreview(file, previewBox, oldUrl) {
+  if (oldUrl) URL.revokeObjectURL(oldUrl);
+  const url = URL.createObjectURL(file);
 
-  if (!image) return;
+  previewBox.replaceChildren();
+  const img = document.createElement('img');
+  img.src = url;
+  img.alt = `Preview of ${file.name}`;
+  previewBox.append(img);
 
+  return url;
+}
+
+// Read a file and give back its base64 text (without the data:image prefix).
+function readAsBase64(file, callback) {
   const reader = new FileReader();
   reader.addEventListener('load', () => {
-    const dataUrl = reader.result;
-    selectedImageBase64 = dataUrl.split(',')[1];
-    console.log(selectedImageBase64.slice(0, 50));
+    callback(reader.result.split(',')[1]);
   });
-  reader.readAsDataURL(image);
+  reader.readAsDataURL(file);
+}
 
-  if (currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
-  currentPreviewUrl = URL.createObjectURL(image);
+imageInput.addEventListener('change', () => {
+  const image = imageInput.files[0];
+  if (!image) return;
 
-  imagePreview.replaceChildren();
-  const preview = document.createElement('img');
-  preview.src = currentPreviewUrl;
-  preview.alt = `Preview of ${image.name}`;
-  imagePreview.append(preview);
+  readAsBase64(image, (base64) => {
+    selectedImageBase64 = base64;
+    console.log('Image 1:', base64.slice(0, 50));
+  });
+
+  previewUrl1 = showPreview(image, imagePreview, previewUrl1);
   describeButton.disabled = false;
 
   result.innerHTML =
     '<span class="result-icon" aria-hidden="true">✳</span><p>Your image is ready.</p>';
 });
 
+imageInput2.addEventListener('change', () => {
+  const image = imageInput2.files[0];
+  if (!image) return;
+
+  readAsBase64(image, (base64) => {
+    selectedImageBase64_2 = base64;
+    console.log('Image 2:', base64.slice(0, 50));
+  });
+
+  previewUrl2 = showPreview(image, imagePreview2, previewUrl2);
+});
+
+// For now this still describes Image 1 only. Image 2 is added in the next prompts.
 describeButton.addEventListener('click', async () => {
   if (!selectedImageBase64) {
     result.textContent = 'Please select an image first.';
