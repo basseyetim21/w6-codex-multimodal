@@ -10,6 +10,14 @@ imageInput.addEventListener('change', () => {
 
   if (!image) return;
 
+  const reader = new FileReader();
+  reader.addEventListener('load', () => {
+    const dataUrl = reader.result;
+    const base64 = dataUrl.split(',')[1];
+    console.log(base64.slice(0, 50));
+  });
+  reader.readAsDataURL(image);
+
   if (currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
   currentPreviewUrl = URL.createObjectURL(image);
 

@@ -1,3 +1,9 @@
 TASK 1
 Prompt 1:
 I want to build a simple webpage that describes an image using AI. Let's start with just the layout, no AI yet. I need a title, a button to choose an image, a space to show the image preview, a "Describe Image" button, and a space to show messages and the description. I will use index.html, style.css and main.js. Please explain what each part does.
+Propmt 2
+Can you explain main.js line by line? Also, what does URL.createObjectURL do, and is it different from FileReader?
+Prompt 3
+Which kind of Ollama model can understand images, and how should the request be structured to send an image from the browser to Ollama? I have llava installed. Please just explain first, no code yet.
+Prompt 4
+Now let's do one small step. Add code to main.js that uses FileReader to convert the selected image into base64, and remove the "data:image/...;base64," prefix. Don't connect to Ollama yet. Just console.log the first 50 characters of the base64 string so I can test it.
