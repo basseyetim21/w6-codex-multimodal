@@ -101,21 +101,51 @@ describeButton.addEventListener('click', async () => {
       throw new Error(`Ollama returned status ${response.status}`);
     }
 
-    return response.json();
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  }
+
+  function createSection(label, outcome) {
+    const section = document.createElement('section');
+    section.className = 'image-description';
+
+    const heading = document.createElement('h3');
+    heading.textContent = label;
+
+    const description = document.createElement('p');
+    description.textContent = outcome.status === 'fulfilled'
+      ? outcome.value.response
+      : 'Something went wrong. Please make sure Ollama is running and try again.';
+
+    section.append(heading, description);
+    return section;
   }
 
   try {
-    const [image1Response, image2Response] = await Promise.all([
+    const outcomes = await Promise.allSettled([
       describeImage(selectedImageBase64),
       describeImage(selectedImageBase64_2)
     ]);
 
-    console.log('Image 1', image1Response);
-    console.log('Image 2', image2Response);
-  } catch (error) {
-    console.error('Error connecting to Ollama:', error);
-    result.textContent =
-      'Something went wrong. Please make sure Ollama is running and try again.';
+    outcomes.forEach((outcome, index) => {
+      const label = `Image ${index + 1}`;
+
+      if (outcome.status === 'fulfilled') {
+        console.log(label, outcome.value);
+      } else {
+        console.error(`${label} request failed:`, outcome.reason);
+      }
+    });
+
+    result.replaceChildren(
+      createSection('Image 1', outcomes[0]),
+      createSection('Image 2', outcomes[1])
+    );
   } finally {
     describeButton.disabled = false;
   }

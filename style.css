@@ -65,6 +65,20 @@ footer span { color: #85a17f; }
 .upload-slot .preview img { max-height: 230px; }
 .upload-slot .placeholder-art { width: 96px; height: 68px; }
 
+/* Task 2: separate descriptions and spinner */
+.result-box:has(.image-description) {
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  text-align: left;
+}
+.image-description { padding: 14px 16px; border: 1px solid var(--line); border-radius: 11px; background: #fff; }
+.image-description h3 { margin: 0 0 8px; color: var(--green-dark); font: 700 .95rem 'Manrope', sans-serif; }
+.image-description p { max-width: none; margin: 0; color: var(--ink); font-size: .88rem; line-height: 1.6; }
+.loading-indicator { display: flex; flex-direction: column; align-items: center; }
+.spinner { width: 28px; height: 28px; border: 3px solid #dce5da; border-top-color: var(--green); border-radius: 50%; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 @media (max-width: 700px) {
   .app { width: min(100% - 28px, 520px); padding-top: 52px; }
   .page-header { margin-bottom: 30px; }
