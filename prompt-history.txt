@@ -15,3 +15,5 @@ Prompt 7
 The description now shows on the page, but the placeholder text "The description feature is coming soon" is still there, so please remove it. Also, while Ollama is working, show a "Describing image..." message and disable the Describe Image button so it can't be clicked twice. When it finishes, re-enable the button.
 Prompt 8
 If I click Describe Image before choosing an image, show the message "Please select an image first." in the result box. The button needs to stay clickable at the start so this message can appear.
+Prompt 9
+If the request to Ollama fails, for example because Ollama is not running, show a clearer error message in the result box: "Something went wrong. Please make sure Ollama is running and try again." Also handle the case where Ollama responds with an error status.

@@ -57,13 +57,17 @@ describeButton.addEventListener('click', async () => {
       })
     });
 
+    if (!response.ok) {
+      throw new Error(`Ollama returned status ${response.status}`);
+    }
+
     const data = await response.json();
     console.log(data);
-
     result.textContent = data.response;
   } catch (error) {
     console.error('Error connecting to Ollama:', error);
-    result.textContent = 'Could not describe the image. Please try again.';
+    result.textContent =
+      'Something went wrong. Please make sure Ollama is running and try again.';
   } finally {
     describeButton.disabled = false;
   }
