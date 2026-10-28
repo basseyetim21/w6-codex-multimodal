@@ -64,24 +64,35 @@ imageInput2.addEventListener('change', () => {
   previewUrl2 = showPreview(image, imagePreview2, previewUrl2);
 });
 
-// For now this still describes Image 1 only. Image 2 is added in the next prompts.
 describeButton.addEventListener('click', async () => {
-  if (!selectedImageBase64) {
-    result.textContent = 'Please select an image first.';
+  if (!selectedImageBase64 || !selectedImageBase64_2) {
+    result.textContent = 'Please select both images first.';
     return;
   }
 
   describeButton.disabled = true;
-  result.textContent = 'Describing image...';
 
-  try {
+  const loading = document.createElement('div');
+  loading.className = 'loading-indicator';
+
+  const spinner = document.createElement('span');
+  spinner.className = 'spinner';
+  spinner.setAttribute('aria-hidden', 'true');
+
+  const message = document.createElement('p');
+  message.textContent = 'Describing images...';
+
+  loading.append(spinner, message);
+  result.replaceChildren(loading);
+
+  async function describeImage(imageBase64) {
     const response = await fetch('http://localhost:11434/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'llava',
         prompt: 'Describe this image in detail.',
-        images: [selectedImageBase64],
+        images: [imageBase64],
         stream: false
       })
     });
@@ -90,9 +101,17 @@ describeButton.addEventListener('click', async () => {
       throw new Error(`Ollama returned status ${response.status}`);
     }
 
-    const data = await response.json();
-    console.log(data);
-    result.textContent = data.response;
+    return response.json();
+  }
+
+  try {
+    const [image1Response, image2Response] = await Promise.all([
+      describeImage(selectedImageBase64),
+      describeImage(selectedImageBase64_2)
+    ]);
+
+    console.log('Image 1', image1Response);
+    console.log('Image 2', image2Response);
   } catch (error) {
     console.error('Error connecting to Ollama:', error);
     result.textContent =

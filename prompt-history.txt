@@ -21,3 +21,5 @@ If the request to Ollama fails, for example because Ollama is not running, show 
 TASK 2
 Prompt 1
 Now I want the app to work with two images. Add a second file input and a second preview area next to the first one, labelled "Image 1" and "Image 2". Show a preview for each. Don't change the Ollama part yet.
+Prompt 2
+Now make the Describe Image button work with both images. Send each selected image to Ollama as its own separate request, and keep each response tied to the correct image so the two can't get mixed up. For now, just console.log both responses labelled "Image 1" and "Image 2". Don't change how the results show on the page yet.
