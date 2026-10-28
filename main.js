@@ -62,11 +62,15 @@ imageInput2.addEventListener('change', () => {
   });
 
   previewUrl2 = showPreview(image, imagePreview2, previewUrl2);
+  describeButton.disabled = false;
+
+  result.innerHTML =
+    '<span class="result-icon" aria-hidden="true">✳</span><p>Your image is ready.</p>';
 });
 
 describeButton.addEventListener('click', async () => {
-  if (!selectedImageBase64 || !selectedImageBase64_2) {
-    result.textContent = 'Please select both images first.';
+  if (!selectedImageBase64 && !selectedImageBase64_2) {
+    result.textContent = 'Please select at least one image.';
     return;
   }
 
@@ -80,7 +84,7 @@ describeButton.addEventListener('click', async () => {
   spinner.setAttribute('aria-hidden', 'true');
 
   const message = document.createElement('p');
-  message.textContent = 'Describing images...';
+  message.textContent = 'Describing selected images...';
 
   loading.append(spinner, message);
   result.replaceChildren(loading);
@@ -110,7 +114,7 @@ describeButton.addEventListener('click', async () => {
     return data;
   }
 
-  function createSection(label, outcome) {
+  function createSection(label, imageBase64, outcome) {
     const section = document.createElement('section');
     section.className = 'image-description';
 
@@ -118,33 +122,43 @@ describeButton.addEventListener('click', async () => {
     heading.textContent = label;
 
     const description = document.createElement('p');
-    description.textContent = outcome.status === 'fulfilled'
-      ? outcome.value.response
-      : 'Something went wrong. Please make sure Ollama is running and try again.';
+
+    if (!imageBase64) {
+      description.textContent = `${label} not selected`;
+    } else if (outcome.status === 'fulfilled') {
+      description.textContent = outcome.value.response;
+    } else {
+      description.textContent =
+        'Something went wrong. Please make sure Ollama is running and try again.';
+    }
 
     section.append(heading, description);
     return section;
   }
 
   try {
-    const outcomes = await Promise.allSettled([
-      describeImage(selectedImageBase64),
-      describeImage(selectedImageBase64_2)
-    ]);
+    const requests = [
+      selectedImageBase64
+        ? describeImage(selectedImageBase64)
+        : Promise.resolve(null),
+      selectedImageBase64_2
+        ? describeImage(selectedImageBase64_2)
+        : Promise.resolve(null)
+    ];
+
+    const outcomes = await Promise.allSettled(requests);
 
     outcomes.forEach((outcome, index) => {
-      const label = `Image ${index + 1}`;
-
-      if (outcome.status === 'fulfilled') {
-        console.log(label, outcome.value);
-      } else {
-        console.error(`${label} request failed:`, outcome.reason);
+      if (outcome.status === 'fulfilled' && outcome.value) {
+        console.log(`Image ${index + 1}`, outcome.value);
+      } else if (outcome.status === 'rejected') {
+        console.error(`Image ${index + 1} request failed:`, outcome.reason);
       }
     });
 
     result.replaceChildren(
-      createSection('Image 1', outcomes[0]),
-      createSection('Image 2', outcomes[1])
+      createSection('Image 1', selectedImageBase64, outcomes[0]),
+      createSection('Image 2', selectedImageBase64_2, outcomes[1])
     );
   } finally {
     describeButton.disabled = false;

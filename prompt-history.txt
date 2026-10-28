@@ -25,3 +25,5 @@ Prompt 2
 Now make the Describe Image button work with both images. Send each selected image to Ollama as its own separate request, and keep each response tied to the correct image so the two can't get mixed up. For now, just console.log both responses labelled "Image 1" and "Image 2". Don't change how the results show on the page yet.
 Prompt 3
 Now show the descriptions on the page instead of only the console. In the result box, show two separate labelled sections: "Image 1" with its description, and "Image 2" with its description. Keep the console.log lines for now. If one request fails, show the error only for that image.
+Prompt 4
+Right now the button says "Please select both images first" if either image is missing. Please change it so that if only one image is selected, it describes that one and shows a clear message like "Image 2 not selected" in the other section. If no images are selected, show "Please select at least one image." Nothing should crash.
